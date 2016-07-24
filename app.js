@@ -31,6 +31,8 @@ var main = function() {
 	var printList = function (){
 
 		$('#list_of_users').empty();
+		$('#pages').empty();
+
 		userArray.forEach(function(user, i){
 			if(i >= (page-1)*numberOfElementsPerPage && i<page*numberOfElementsPerPage){
 				var button = $('<button>REMOVE</button>').click(function(){
@@ -51,9 +53,20 @@ var main = function() {
 				$('#list_of_users').append('<p>' + user.name + ' ' + user.surname + '</p>').append(button).append(upButton).append(downButton);
 			}
 		})
+		for(var i=1; i<=numberOfPages; i++){
+			var button = $('<button>' + i + '</button>').click(function(){
+				goToPage(parseInt($(this).text()));
+			});
+			$('#pages').append(button);
+		}
 
 		$('#page').text(page);
 		$('#number_of_pages').text(numberOfPages);
+	}
+
+	var goToPage = function(pageNumber){
+		page = pageNumber;
+		printList();
 	}
 
 	var moveUp = function (user) {
@@ -94,6 +107,7 @@ var main = function() {
 		userClass.prototype.newValue = '445';
 		printList();
 	}
+
 
 	$('#next_page').click(function(){
 		if(page < numberOfPages) {
